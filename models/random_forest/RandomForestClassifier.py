@@ -35,3 +35,28 @@ class RandomForestClassifier(RandomForest):
         ypred = self._predict(X)
         #return the results
         return(ypred)  
+
+    ### Updated by Tomoki Kyotani
+    def find_important_features(self, num_indexes):
+
+        feature_importances = { i:0 for i in range(num_indexes) }
+        
+        for tree in self.trees:
+            level = 1
+            feature_importances = self.find_important_features_helper(tree.tree, level, feature_importances)
+        
+        return feature_importances
+
+    def find_important_features_helper(self, n, level, feature_importances):
+        if level <= 3:
+            if level == 1:
+                imporance_score = 3
+            elif level == 2:
+                imporance_score = 2
+            else:
+                imporance_score = 1
+
+            feature_importances[n.feature_index] += imporance_score
+            self.find_important_features_helper(n.get_left_node(), level+1, feature_importances)
+            self.find_important_features_helper(n.get_right_node(), level+1, feature_importances)
+            return feature_importances
