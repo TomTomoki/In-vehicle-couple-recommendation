@@ -1,4 +1,4 @@
-# In-vehicle-couple-recommendation
+# In-vehicle-coupon-recommendation
 
 Based on the dataset below, I will build a classification model to predict if a driver will accept a coupon or not.
 
